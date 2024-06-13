@@ -22,7 +22,10 @@ const uri =
 
 const connect = async () => {
   try {
-    await mongoose.connect(uri);
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("Database conncted!");
   } catch (error) {
     console.log(error.message);

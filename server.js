@@ -17,8 +17,7 @@ app.use('/auth', authRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-const uri =
-  "mongodb+srv://dushyanthaat:Trophy24@trophycluster.nuvoo5n.mongodb.net/?retryWrites=true&w=majority&appName=TrophyCluster";
+const uri = process.env.MONGO_URI;
 
 const connect = async () => {
   try {

@@ -31,8 +31,8 @@ const connect = async () => {
 
 connect();
 
-const server = app.listen("3001", "localhost", () =>
-  console.log("Server is running")
-);
+// const server = app.listen("3001", "localhost", () =>
+//   console.log("Server is running")
+// );
 
 app.use("/api", router);

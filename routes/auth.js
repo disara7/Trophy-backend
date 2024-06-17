@@ -7,21 +7,28 @@ const router = express.Router();
 
 
 const login = async (req, res) => {
-  const { username, otp } = req.body;
+  const { username, password } = req.body;
 
-  if (!username || !otp) {
-    return res.status(400).json({ message: 'Username and OTP are required' });
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Username and password are required' });
   }
 
   const user = await Employee.findOne({ username });
-  if (!user || !user.compareOTP(otp)) {
+  if (!user || !user.compareOTP(password)) {
     return res.status(401).json({ message: 'Invalid username or OTP' });
   }
 
   if (user.firstLogin) {
+    if (!user.compareOTP(password)) {
+      return res.status(401).json({ message: 'Invalid OTP' });
+    }
     return res.status(200).json({ message: 'OTP verified. Please change your password.', firstLogin: true });
-  }
-
+  } else {
+    if (!user.comparePassword(password)) {
+      return res.status(401).json({ message: 'Invalid password' });
+    }
+  };
+  
   const token = generateAccessToken(user.employeeId);
   res.json({ token });
 };

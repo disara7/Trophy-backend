@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require('bcryptjs');
 
 const employeeSchema = new Schema({
   employeeId: {
@@ -7,7 +8,7 @@ const employeeSchema = new Schema({
     unique: true,
     required: true,
   },
-  username: {
+  userName: {
     type: String,
   },
   passwordHash: {
@@ -28,13 +29,13 @@ const employeeSchema = new Schema({
 });
 
 employeeSchema.methods.compareOTP = async function(otp) {
-  const isOtpValid = await bcrypt.compare(otp, this.otp);
+  const isOtpValid = await (otp === this.otp);
   return isOtpValid && this.otpExpiry > new Date();
 };
 
-// employeeSchema.methods.comparePassword = function(password) {
-//   return bcrypt.compare(password, this.passwordHash);
-// };
+employeeSchema.methods.comparePassword = function(password) {
+  return bcrypt.compare(password, this.passwordHash);
+};
 
 // employeeSchema.pre('save', async function(next) {
 //   //Hash password

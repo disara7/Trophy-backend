@@ -45,8 +45,8 @@ const changePassword = async (req, res) => {
     return res.status(400).json({ message: 'Invalid request' });
   }
 
-
-  user.passwordHash = newPassword;
+  const salt = await bcrypt.genSalt(10);
+  user.passwordHash = bcrypt.hash(newPassword, salt);
   user.otp = null;
   user.otpExpiry = null;
   user.firstLogin = false;

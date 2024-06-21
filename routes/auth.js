@@ -24,11 +24,10 @@ const login = async (req, res) => {
     }
     return res.status(200).json({ message: 'OTP verified. Please change your password.', firstLogin: true });
   } else {
-    if (!user.comparePassword(password)) {
-      return res.status(401).json({ message: 'Invalid password' });
+    if (user.comparePassword(password)) {
+      return res.status(202).json({ message: 'Successfull' });
     }
   };
-  
   const token = generateAccessToken(user.employeeId);
   res.json({ token });
 };

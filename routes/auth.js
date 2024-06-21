@@ -52,6 +52,10 @@ const changePassword = async (req, res) => {
   user.otpExpiry = null;
   user.firstLogin = false;
   await user.save();
+  
+  if(user.passwordHash){
+    return res.status(200).json({ message: 'OTP verified. Please change your password.'});
+  };
 
   const token = generateAccessToken(user.employeeId);
   res.json({ token });

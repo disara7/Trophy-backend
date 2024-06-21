@@ -13,7 +13,7 @@ const login = async (req, res) => {
     return res.status(400).json({ message: 'Username and password are required' });
   }
 
-  const user = await Employee.findOne({ username });
+  const user = await Employee.findOne({ userName: username });
   if (!user || !user.compareOTP(password)) {
     return res.status(401).json({ message: 'Invalid username or OTP' });
   }
@@ -40,7 +40,7 @@ const changePassword = async (req, res) => {
     return res.status(400).json({ message: 'Username and new password are required' });
   }
 
-  const user = await Employee.findOne({ username });
+  const user = await Employee.findOne({ userName: username });
   if (!user || !user.firstLogin) {
     return res.status(400).json({ message: 'Invalid request' });
   }

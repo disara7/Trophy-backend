@@ -15,10 +15,10 @@ const employeeSchema = new Schema({
     type: String,
   },
   otp: {
-    type: String, required: true
+    type: String
   },
   otpExpiry: {
-    type: Date, required: true
+    type: Date,
   },
   firstLogin: {
     type: Boolean, default: true

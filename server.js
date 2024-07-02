@@ -22,27 +22,28 @@ app.use(bodyParser.json());
 app.use("/auth", authRoutes);
 app.use("/api", activityRoutes);
 
-// Root Route
-app.get("/", (req, res) => {
-  res.send("Hello");
+app.get('/', (req, res) => {
+  res.send('Hello');
 });
 
-// Start Server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+const uri = process.env.MONGO_URI;
 
-// Connect to MongoDB
-const connectDB = async () => {
+const connect = async () => {
   try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("Database connected!");
+    await mongoose.connect(uri);
+    console.log("Database conncted!");
   } catch (error) {
-    console.log("Error connecting to database:", error.message);
+    console.log(error.message);
   }
 };
 
-connectDB();
+connect();
+
+// const server = app.listen("3001", "localhost", () =>
+//   console.log("Server is running")
+// );
+
+app.use("/api", router);

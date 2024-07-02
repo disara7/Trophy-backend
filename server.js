@@ -2,7 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/auth");
-const activityController = require("./Database/controller/activity_controller");
+const activityRoutes = require("./routes/activityRoutes");
 const PORT = 80;
 const app = express();
 const cors = require("cors");
@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use("/auth", authRoutes);
 
 // Define route for getting activities
-app.get("/Activities", activityController.getActivities);
+app.use("/act", activityRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello");

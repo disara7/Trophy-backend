@@ -6,6 +6,6 @@ const activityController = require("./controller/activity_controller");
 router.get("/empolyee", controller.getEmployee);
 router.post("/addempolyee", controller.addEmployee);
 
-router.get("/activities", activityController.getActivities);
+router.get("/Activities", activityController.getActivities);
 
 module.exports = router;

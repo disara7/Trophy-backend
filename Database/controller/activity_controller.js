@@ -1,3 +1,5 @@
+// activity_controller.js
+
 const Activity = require("../models/activity");
 
 // Get all activities

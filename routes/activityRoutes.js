@@ -1,6 +1,8 @@
+// activityRoutes.js
+
 const express = require("express");
 const router = express.Router();
-const activityController = require("../controllers/activity_controller");
+const activityController = require("../Database/controller/activity_controller");
 
 // GET all activities
 router.get("/activities", activityController.getActivities);

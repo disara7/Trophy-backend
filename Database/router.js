@@ -7,6 +7,6 @@ router.get("/empolyee", controller.getEmployee);
 router.post("/addempolyee", controller.addEmployee);
 
 //activities
-router.get("/getActivities", activityController.getActivities);
+router.get("/Activities", activityController.getActivities);
 
 module.exports = router;

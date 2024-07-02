@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/auth");
-const activityRoutes = require("./routes/activityRoutes");
+const activityController = require("./Database/controller/activity_controller");
 const PORT = 80;
 const app = express();
 const cors = require("cors");
@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use(bodyParser.json());
 app.use("/auth", authRoutes);
-app.use("/act", activityRoutes);
+app.get("/act/Activities", activityController.getActivities);
 
 app.get("/", (req, res) => {
   res.send("Hello");

@@ -11,4 +11,6 @@ const getActivities = (req, res, next) => {
     });
 };
 
-exports.getActivities = getActivities;
+module.exports = {
+  getActivities,
+};

@@ -4,9 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const employeeSchema = new Schema({
   employeeId: {
-    type: String,
-    unique: true,
-    required: true,
+    type: Schema.Types.ObjectId,
   },
   userName: {
     type: String,

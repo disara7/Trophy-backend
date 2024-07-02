@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const coinbankSchema = new Schema({
-  coinbankId: {
-    type: String,
+const CoinBankSchema = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
   },
   noOfCoinsRedeemed: {
-    type: String,
+    type: Number,
   },
   noOfCoinsEarned: {
-    type: String,
+    type: Number,
   },
 });
 
-const Coinbank = mongoose.model("Coinbank", coinbankSchema);
+const Coinbank = mongoose.model("Coinbank", CoinBankSchema);
 module.export = Coinbank;

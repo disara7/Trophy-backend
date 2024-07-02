@@ -2,17 +2,21 @@ require('dotenv').config();
 const express = require('express')
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
+const homeRoute = require('./routes/home');
 const PORT = 80;
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const router = require("./Database/router");
+const { verifyToken } = require("./authHelpers")
 
 app.use(cors());
 app.use(express.json());
+app.use(verifyToken);
 
 app.use(bodyParser.json());
 app.use('/auth', authRoutes);
+app.get('/', homeRoute)
 
 app.get('/', (req, res) => {
   res.send('Hello');

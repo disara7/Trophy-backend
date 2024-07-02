@@ -1,14 +1,12 @@
 const Activity = require("../models/activity");
 
-// Get all activities
-const getActivities = (req, res, next) => {
-  Activity.find()
-    .then((activities) => {
-      res.json({ activities });
-    })
-    .catch((error) => {
-      res.json({ error });
-    });
+const getActivities = async (req, res) => {
+  try {
+    const activities = await Activity.find();
+    res.status(200).json(activities);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 module.exports = {

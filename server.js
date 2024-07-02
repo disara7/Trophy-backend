@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use("/auth", authRoutes);
 
 // Define route for getting activities
-app.get("/act/Activities", activityController.getActivities);
+app.get("/Activities", activityController.getActivities);
 
 app.get("/", (req, res) => {
   res.send("Hello");

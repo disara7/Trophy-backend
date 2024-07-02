@@ -9,9 +9,11 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
 const activityRoutes = require("./routes/activityRoutes");
 
-const PORT = 3005;
+const PORT = 80;
 const app = express();
-const uri = process.env.MONGO_URI;
+const cors = require("cors");
+const mongoose = require("mongoose");
+const router = require("./Database/router");
 
 // Middleware
 app.use(cors());

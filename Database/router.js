@@ -7,7 +7,6 @@ router.get("/empolyee", controller.getEmployee);
 router.post("/addempolyee", controller.addEmployee);
 
 //activities
-router.get("/activities", activityController.getActivities);
-router.post("/activities", activityController.addActivity);
+router.get("/getActivities", activityController.getActivities);
 
 module.exports = router;

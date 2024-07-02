@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 // Routes
 app.use("/auth", authRoutes);
-app.use("/api", activityRoutes);
+app.use("/act", activityRoutes);
 
 // Root Route
 app.get("/", (req, res) => {

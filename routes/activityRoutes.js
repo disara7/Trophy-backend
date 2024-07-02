@@ -5,9 +5,6 @@ const router = express.Router();
 const activityController = require("../Database/controller/activity_controller");
 
 // GET all activities
-router.get("/activities", activityController.getActivities);
-
-// POST a new activity
-router.post("/activities", activityController.addActivity);
+router.get("/getActivities", getActivities);
 
 module.exports = router;

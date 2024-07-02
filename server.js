@@ -1,7 +1,8 @@
-require('dotenv').config();
-const express = require('express')
-const bodyParser = require('body-parser');
-const authRoutes = require('./routes/auth');
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const authRoutes = require("./routes/auth");
+
 const PORT = 80;
 const app = express();
 const cors = require("cors");
@@ -12,16 +13,20 @@ app.use(cors());
 app.use(express.json());
 
 app.use(bodyParser.json());
-app.use('/auth', authRoutes);
+app.use("/auth", authRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Hello');
+app.get("/", (req, res) => {
+  res.send("Hello");
 });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 const uri = process.env.MONGO_URI;
+
+// Activity Routes
+const activityRoutes = require("./routes/activityRoutes");
+app.use("/api", activityRoutes);
 
 const connect = async () => {
   try {
@@ -38,4 +43,4 @@ connect();
 //   console.log("Server is running")
 // );
 
-app.use("/api", router);
+//app.use("/api", router);

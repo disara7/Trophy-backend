@@ -1,13 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const controller = require("./controller/employee_controller");
 const activityController = require("../controllers/activity_controller");
 
-router.get("/empolyee", controller.getEmployee);
-router.post("/addempolyee", controller.addEmployee);
-
-//activities
+// GET all activities
 router.get("/activities", activityController.getActivities);
+
+// POST a new activity
 router.post("/activities", activityController.addActivity);
 
 module.exports = router;

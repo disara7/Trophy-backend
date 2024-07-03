@@ -22,7 +22,7 @@ const HomeState = async (req, res) => {
         };
 
         // Send response
-        res.json(response);
+        res.status(200).json(response);
     } catch (error) {
         // Handle errors
         console.error('Error fetching data:', error);

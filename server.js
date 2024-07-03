@@ -16,7 +16,7 @@ app.use(verifyToken);
 
 app.use(bodyParser.json());
 app.use('/auth', authRoutes);
-app.get('/', homeRoute)
+app.use('/', homeRoute)
 
 app.get('/', (req, res) => {
   res.send('Hello');

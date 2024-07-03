@@ -12,11 +12,13 @@ const { verifyToken } = require("./authHelpers")
 
 app.use(cors());
 app.use(express.json());
-app.use(verifyToken);
+
 
 app.use(bodyParser.json());
 app.use('/auth', authRoutes);
-app.use('/', homeRoute)
+app.use('/', homeRoute);
+
+app.use(verifyToken);
 
 app.get('/', (req, res) => {
   res.send('Hello');

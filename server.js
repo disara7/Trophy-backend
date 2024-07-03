@@ -18,7 +18,7 @@ app.use("/auth", authRoutes);
 app.use("/act", activityRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Hello");
+  res.send("Hello Minuri");
 });
 
 app.listen(PORT, () => {

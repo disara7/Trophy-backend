@@ -14,23 +14,25 @@ const login = async (req, res) => {
   }
 
   const user = await Employee.findOne({ userName: username });
-  if (!user || !user.compareOTP(password)) {
+  if (!user) {
     return res.status(401).json({ message: 'Invalid username or OTP' });
   }
 
   if (user.firstLogin) {
-    if (!user.compareOTP(password)) {
+    if (!await user.compareOTP(password)) {
       return res.status(401).json({ message: 'Invalid OTP' });
     }
     return res.status(200).json({ message: 'OTP verified. Please change your password.', firstLogin: true });
   } else {
-    if (user.comparePassword(password)) {
-      return res.status(202).json({ message: 'Successfull' });
+    if (!await user.comparePassword(password)) {
+      return res.status(401).json({ message: 'Invalid password' });
     }
-  };
+  }
+
   const token = generateAccessToken(user.employeeId);
-  res.json({ token });
+  return res.status(202).json({ token });
 };
+
 
 const changePassword = async (req, res) => {
   const { username, newPassword } = req.body;
@@ -52,12 +54,11 @@ const changePassword = async (req, res) => {
   user.firstLogin = false;
   await user.save();
   
-  if(user.passwordHash){
-    return res.status(200).json({ message: 'OTP verified. Please change your password.'});
-  };
-
   const token = generateAccessToken(user.employeeId);
-  res.json({ token });
+
+  if(user.passwordHash){
+    return res.status(200).json({ token });
+  };
 };
 
 

@@ -4,7 +4,8 @@ const bcrypt = require('bcryptjs');
 
 const employeeSchema = new Schema({
   employeeId: {
-    type: Schema.Types.ObjectId,
+    type: String,
+    unique: true,
   },
   userName: {
     type: String,
@@ -24,6 +25,13 @@ const employeeSchema = new Schema({
   employeeName: {
     type: String,
   },
+});
+
+employeeSchema.pre('save', function(next) {
+  if (!this.employeeId) {
+    this.employeeId = this._id.toString();
+  }
+  next();
 });
 
 employeeSchema.methods.compareOTP = async function(otp) {

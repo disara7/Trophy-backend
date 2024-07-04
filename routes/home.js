@@ -4,14 +4,17 @@ const Progress = require('../Database/models/progress');
 const express = require('express');
 const router = express.Router();
 
+const { verifyToken } = require('../authHelpers');
+
 const HomeState = async (req, res) => {
-    const userId = req.userid; 
+    const userId = req.userId; 
+    console.log('Extracted userId:', userId);
 
     try {
         // Fetch data from the database
-        const coinBank = await Coinbank.findOne({ userId: userId });
-        const challenges = await Challenge.findOne({ userId: userId });
-        const progress = await Progress.findOne({ userId: userId });
+        const coinBank = await Coinbank.findOne({ userId });
+        const challenges = await Challenge.findOne({ userId });
+        const progress = await Progress.findOne({ userId });
 
         // Prepare response object
         const response = {
@@ -22,14 +25,14 @@ const HomeState = async (req, res) => {
         };
 
         // Send response
-        res.status(200).json(response);
+        return res.status(200).json(response);
     } catch (error) {
         // Handle errors
         console.error('Error fetching data:', error);
-        res.status(500).json({ message: 'Error fetching data' });
+        return res.status(500).json({ message: 'Error fetching data ${userId}' });
     }
 };
 
-router.get('/home', HomeState);
+router.get('/home',verifyToken, HomeState);
 
 module.exports = router;

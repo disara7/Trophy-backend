@@ -1,17 +1,22 @@
 const mongoose = require("mongoose");
+const Employee = require("./employee");
 const Schema = mongoose.Schema;
 
 const CoinBankSchema = new Schema({
   userId: {
-    type: Schema.Types.ObjectId,
+    type: String,
+    unique: true,
+    ref: Employee
   },
   noOfCoinsRedeemed: {
     type: Number,
+    default: 0
   },
   noOfCoinsEarned: {
     type: Number,
+    default: 0
   },
 });
 
 const Coinbank = mongoose.model("Coinbank", CoinBankSchema);
-module.export = Coinbank;
+module.exports = Coinbank;

@@ -12,6 +12,7 @@ const getEmployee = (req, res, next) => {
 
 const addEmployee = (req, res, next) => {
   const employee = new Employee({
+    employeeId: req.body.employeeId,
     userName: req.body.userName,
     passwordHash: req.body.passwordHash,
     employeeName: req.body.employeeName,

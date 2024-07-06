@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/auth");
 const activityRoutes = require("./routes/activityRoutes");
+const hackathonRoutes = require("./routes/hackathonRoutes");
 const PORT = 80;
 const app = express();
 const cors = require("cors");
@@ -15,9 +16,10 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use("/auth", authRoutes);
 app.use("/act", activityRoutes);
+app.use("/hack", hackathonRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Hello MS");
+  res.send("Hello");
 });
 
 app.listen(PORT, () => {

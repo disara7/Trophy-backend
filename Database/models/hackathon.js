@@ -2,26 +2,31 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const hackathonSchema = new Schema({
-  title: {
+  hacktitle: {
     type: String,
     required: true,
   },
-  description: {
+
+  hackdescription: {
     type: String,
     required: true,
   },
-  imageUrl: {
+
+  hackimageUrl: {
     type: String,
     required: true,
   },
-  coinCount: {
+
+  hackcoinCount: {
     type: Number,
     required: true,
   },
+
   hackathondetails: {
     type: String,
     required: true,
   },
+
   hackathonmainimgUrl: {
     type: String,
     required: true,

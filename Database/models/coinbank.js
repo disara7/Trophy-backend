@@ -16,6 +16,10 @@ const CoinBankSchema = new Schema({
     type: Number,
     default: 0
   },
+  noOfCoinsGifted: {
+    type: Number,
+    default: 0
+  }
 });
 
 const Coinbank = mongoose.model("Coinbank", CoinBankSchema);

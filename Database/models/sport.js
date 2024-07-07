@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const activitySchema = new Schema({
+const sportSchema = new Schema({
   sporttitle: {
     type: String,
     required: true,

@@ -14,7 +14,6 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 const router = require("./Database/router");
-const { verifyToken } = require("./authHelpers")
 
 app.use(cors());
 app.use(express.json());

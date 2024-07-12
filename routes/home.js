@@ -8,7 +8,6 @@ const { verifyToken } = require('../authHelpers');
 
 const HomeState = async (req, res) => {
     const userId = req.userId; 
-    console.log('Extracted userId:', userId);
 
     try {
         // Fetch data from the database

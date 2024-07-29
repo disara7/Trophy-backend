@@ -1,10 +1,10 @@
-const Coinbank = require('../Database/models/coinbank');
-const Challenge = require('../Database/models/challenge');
-const Progress = require('../Database/models/progress');
-const express = require('express');
+import Coinbank from '../Database/models/coinbank.js';
+import Challenge from '../Database/models/challenge.js';
+import Progress from '../Database/models/progress.js';
+import express from 'express';
 const router = express.Router();
 
-const { verifyToken } = require('../authHelpers');
+import { verifyToken } from '../authHelpers.js';
 
 const HomeState = async (req, res) => {
     const userId = req.userId; 
@@ -34,4 +34,4 @@ const HomeState = async (req, res) => {
 
 router.get('/home',verifyToken, HomeState);
 
-module.exports = router;
+export default router;

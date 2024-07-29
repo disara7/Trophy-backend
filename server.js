@@ -1,19 +1,16 @@
-require('dotenv').config();
-const express = require('express')
-const http = require('http');
-const socketIo = require('socket.io');
-const bodyParser = require('body-parser');
-const authRoutes = require('./routes/auth');
-const homeRoute = require('./routes/home');
+import * as dotenv from 'dotenv';
+dotenv.config();
+import express from 'express';
+import bodyParser from 'body-parser';
+import authRoutes from './routes/auth.js';
+import homeRoute from './routes/home.js';
 
 const PORT = 80;
 const app = express();
-const cors = require("cors");
-const mongoose = require("mongoose");
-const server = http.createServer(app);
-const io = socketIo(server);
+import cors from "cors";
+import mongoose from "mongoose";
 
-const router = require("./Database/router");
+import router from "./Database/router.js";
 
 app.use(cors());
 app.use(express.json());
@@ -22,21 +19,15 @@ app.use(express.urlencoded({
   extended: true
 }))
 
-app.use((req, res, next) => {
-  req.io = io;
-  next();
-});
 
 
 app.use(bodyParser.json());
 app.use('/auth', authRoutes);
-
 app.use('/fetch', homeRoute);
 
 
-
 app.get('/', (req, res) => {
-  res.send('Hello');
+  res.send('Hello World');
 });
 
 app.listen(PORT, () => {

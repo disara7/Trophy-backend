@@ -1,14 +1,19 @@
-const express = require("express");
+import express from 'express';
+import employeeController from './controller/employee_controller.js';
+import challengeController from './controller/challenge_contoller.js';
+import blogController from './controller/blog_controller.js';
+import adminController from './controller/admin_controller.js';
 const router = express.Router();
-const controller = require("./controller/employee_controller");
-const controllerCH = require("./controller/challenge_contoller");
-const controllerB = require("./controller/blog_controller");
 
-const { verifyToken } = require("../authHelpers");
+import { verifyToken } from "../authHelpers.js";
 
-router.get("/empolyee", controller.getEmployee);
-router.post("/addempolyee", controller.addEmployee);
-router.post("/addchallenge", controllerCH.addChallenge);
-router.post("/addblog",verifyToken, controllerB.addBlog);
+router.get("/empolyee", employeeController.getEmployee);
+router.post("/addempolyee", employeeController.addEmployee);
+router.post("/addchallenge", challengeController.addChallenge);
+router.post("/addblog",verifyToken, blogController.addBlog);
+router.get("/getblog",verifyToken, blogController.getBlog);
+router.post("/addAdmin", adminController.addAdmin);
+router.post("/getAdmin", adminController.verifyAdmin);
+router.post('/verifyToken', adminController.verifyToken);
 
-module.exports = router;
+export default router;

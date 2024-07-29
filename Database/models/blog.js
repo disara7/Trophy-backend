@@ -1,15 +1,15 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-const Employee = require("./employee");
+import Employee from "./employee.js";
 
 const blogSchema = new Schema({
   userId: {
     type: String,
-    unique: true,
     ref: Employee
   },
   articleId: {
     type: String,
+    unique: true,
   },
   title: {
     type: String,
@@ -22,6 +22,12 @@ const blogSchema = new Schema({
   },
   content: {
     type: String,
+  },
+  state: {
+    type: String,
+  },
+  date: {
+    type: Date,
   }
 });
 
@@ -33,4 +39,4 @@ blogSchema.pre('save', function(next) {
 });
 
 const Blog = mongoose.model("Blog", blogSchema);
-module.exports = Blog;
+export default Blog;

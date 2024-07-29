@@ -1,4 +1,4 @@
-const Challenge = require('../models/challenge');
+import Challenge from '../models/challenge.js';
 
 const addChallenge = (req, res, next) => {
   const newChallenge = new Challenge({
@@ -15,4 +15,4 @@ const addChallenge = (req, res, next) => {
     });
 };
 
-exports.addChallenge = addChallenge;
+export default { addChallenge };

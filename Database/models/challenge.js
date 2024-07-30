@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Employee = require("./employee");
+import mongoose from "mongoose";
+import Employee from "./employee.js";
 const Schema = mongoose.Schema;
 
 const challengeSchema = new Schema({
@@ -19,4 +19,4 @@ const challengeSchema = new Schema({
 });
 
 const Challenge = mongoose.model("Challenge", challengeSchema);
-module.exports = Challenge;
+export default Challenge;

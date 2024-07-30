@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Employee = require("./employee");
+import mongoose from "mongoose";
+import Employee from "./employee.js";
 const Schema = mongoose.Schema;
 
 const CoinBankSchema = new Schema({
@@ -23,4 +23,4 @@ const CoinBankSchema = new Schema({
 });
 
 const Coinbank = mongoose.model("Coinbank", CoinBankSchema);
-module.exports = Coinbank;
+export default Coinbank;

@@ -1,7 +1,7 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const { generateAccessToken } = require('../authHelpers');
-const Employee = require('../Database/models/employee');
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import { generateAccessToken } from '../authHelpers.js';
+import Employee from '../Database/models/employee.js';
 const router = express.Router();
 
 
@@ -66,5 +66,5 @@ const changePassword = async (req, res) => {
 router.post('/login', login);
 router.post('/change-password', changePassword);
 
-module.exports = router;
+export default router;
 

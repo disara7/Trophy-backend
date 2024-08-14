@@ -46,4 +46,14 @@ const getBlog = async (req, res, next) => {
     }
 }
 
-export default {addBlog, getBlog};
+const fetchBlogs = async (req, res, next) => {
+  try {
+    const blogs = await Blog.find({ state: 'In Review' });
+    res.json(blogs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching blogs' });
+  }
+}
+
+export default {addBlog, getBlog, fetchBlogs};

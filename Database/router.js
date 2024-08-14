@@ -9,9 +9,12 @@ import { verifyToken } from "../authHelpers.js";
 
 router.get("/empolyee", employeeController.getEmployee);
 router.post("/addempolyee", employeeController.addEmployee);
+router.post("/resetPassword", employeeController.restPassword);
+router.post("/deleteempolyee", employeeController.deleteUser);
 router.post("/addchallenge", challengeController.addChallenge);
 router.post("/addblog",verifyToken, blogController.addBlog);
 router.get("/getblog",verifyToken, blogController.getBlog);
+router.get("/fetchBlogs", blogController.fetchBlogs);
 router.post("/addAdmin", adminController.addAdmin);
 router.post("/getAdmin", adminController.verifyAdmin);
 router.post('/verifyToken', adminController.verifyToken);

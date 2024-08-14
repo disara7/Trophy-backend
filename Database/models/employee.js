@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 import bcrypt from 'bcryptjs';
 
+
 const employeeSchema = new Schema({
   employeeId: {
     type: String,

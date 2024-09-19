@@ -20,6 +20,8 @@ router.post("/addchallenge", challengeController.addChallenge);
 router.post("/addblog",verifyToken,upload.single('image'), blogController.addBlog);
 router.get("/getblog",verifyToken, blogController.getBlog);
 router.get("/fetchBlogs", blogController.fetchBlogs);
+router.get("/fetchAcceptedBlogs", blogController.fetchAcceptedBlogs);
+router.get("/popularPosts", blogController.popularPosts);
 router.post("/addAdmin", adminController.addAdmin);
 router.post("/getAdmin", adminController.verifyAdmin);
 router.post('/verifyToken', adminController.verifyToken);

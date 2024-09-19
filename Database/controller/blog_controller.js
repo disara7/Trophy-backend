@@ -1,6 +1,7 @@
 import Blog from '../models/blog.js';
 import { db, doc, setDoc, ref, storage, uploadBytes, getDownloadURL, getDoc } from '../../Firebase/firebase-config.js';
 import { v4 as uuidv4 } from 'uuid';
+import Employee from "../models/employee.js";
 const addBlog = async (req, res, next) => {
   const userId = req.userId;
   try {
@@ -76,5 +77,73 @@ const fetchBlogs = async (req, res, next) => {
     res.status(500).json({ message: 'Error fetching blogs' });
   }
 }
+const fetchAcceptedBlogs = async (req, res, next) => {
+  try {
+    const { page = 1, category = 'All' } = req.query; // Get page and category from query parameters
+    const limit = 10; // Define how many blogs to return per page
+    const skip = (page - 1) * limit;
 
-export default {addBlog, getBlog, fetchBlogs};
+    // Base query: Only blogs with state 'accepted'
+    let query = { state: 'accepted' };
+
+    // Add category filter if the category is not "All"
+    if (category !== 'All') {
+      query.category = category;
+    }
+
+    // Fetch the blogs based on the query with pagination
+    const blogs = await Blog.find(query)
+      .skip(skip)
+      .limit(limit);
+
+    // Get the total count of accepted blogs for pagination metadata
+    const totalBlogs = await Blog.countDocuments(query);
+
+    // Calculate total pages
+    const totalPages = Math.ceil(totalBlogs / limit);
+
+    // Respond with blogs and pagination information
+    res.json({
+      currentPage: parseInt(page),  // Convert to an integer
+      totalPages: totalPages,
+      blogs: blogs,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching accepted blogs' });
+  }
+};
+
+const popularPosts = async (req, res, next) => {
+  try {
+    const blogs = await Blog.find({ state: 'accepted' })
+      .sort({ views: -1 })
+      .limit(10);   
+
+      const blogsWithAuthor = await Promise.all(
+        blogs.map(async (blog) => {
+          const employee = await Employee.findOne({ employeeId: blog.userId });
+          const employeeName = employee ? employee.employeeName : 'Unknown Author'; 
+  
+          return {
+            ...blog._doc, 
+            employeeName, 
+          };
+        })
+      );
+
+      // Return blogs with author name
+      res.json(blogsWithAuthor);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching blogs' });
+  }
+}
+
+
+
+
+
+
+export default {addBlog, getBlog, fetchBlogs, fetchAcceptedBlogs, popularPosts};

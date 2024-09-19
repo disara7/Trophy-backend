@@ -1,5 +1,4 @@
 import Coinbank from '../Database/models/coinbank.js';
-import Challenge from '../Database/models/challenge.js';
 import Progress from '../Database/models/progress.js';
 import express from 'express';
 const router = express.Router();
@@ -12,14 +11,13 @@ const HomeState = async (req, res) => {
     try {
         // Fetch data from the database
         const coinBank = await Coinbank.findOne({ userId });
-        const challenges = await Challenge.findOne({ userId });
         const progress = await Progress.findOne({ userId });
 
         // Prepare response object
         const response = {
             coins: coinBank ? coinBank.noOfCoinsEarned : 0,
-            dailyChallenge: challenges ? challenges.dailyChallenge : 0,
-            completedChallenges: challenges ? challenges.completedChallenges : 0,
+            progressPoint: progress ? progress.progressPoint : 0,
+            targetPoint: progress ? progress.targetPoint : 100,
             level: progress ? progress.level : 0,
         };
 

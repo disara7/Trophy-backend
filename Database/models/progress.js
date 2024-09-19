@@ -4,7 +4,15 @@ const Schema = mongoose.Schema;
 const ProgressSchema = new mongoose.Schema({
   userId: {
     type: Schema.Types.ObjectId,
-},
+  },
+  progressPoint: {
+    type: Number,
+    default: 0
+  },
+  targetPoint: {
+    type: Number,
+    default: 0
+  },
   level: {
     type: Number,
   },

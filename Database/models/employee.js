@@ -36,7 +36,7 @@ employeeSchema.pre('save', function(next) {
 });
 
 employeeSchema.methods.compareOTP = async function(otp) {
-  const isOtpValid = await (otp === this.otp);
+  const isOtpValid = await bcrypt.compare(otp, this.otp);
   return isOtpValid && this.otpExpiry > new Date();
 };
 

@@ -19,9 +19,8 @@ app.use(express.urlencoded({
   extended: true
 }))
 
-
-
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '100mb' })); 
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use('/auth', authRoutes);
 app.use('/fetch', homeRoute);
 

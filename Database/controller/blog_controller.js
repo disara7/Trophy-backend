@@ -1,45 +1,66 @@
 import Blog from '../models/blog.js';
-import { db, doc, setDoc } from '../../Firebase/firebase-config.js';
-
+import { db, doc, setDoc, ref, storage, uploadBytes, getDownloadURL, getDoc } from '../../Firebase/firebase-config.js';
+import { v4 as uuidv4 } from 'uuid';
 const addBlog = async (req, res, next) => {
-    const userId = req.userId;
+  const userId = req.userId;
   try {
     // Extract data from the request body
     const { title, subtitle, category, content, state, date } = req.body;
+    const image = req.file; // Assuming you're using multer for file upload
+
+    let imageUrl = null;
+
+    if (image) {
+      const imageBuffer = image.buffer;
+      const imageExtension = image.mimetype.split('/')[1];
+      const imageName = `blogs/${uuidv4()}.${imageExtension}`;
+
+      // Create a reference to Firebase Storage
+      const storageRef = ref(storage, imageName);
+
+      // Upload the image to Firebase Storage
+      const snapshot = await uploadBytes(storageRef, imageBuffer);
+
+      // Get the download URL of the uploaded image
+      imageUrl = await getDownloadURL(snapshot.ref);
+    }
 
     // Create a new Blog instance
     const newBlog = new Blog({
-      userId: userId,
-      title: title,
-      subtitle: subtitle,
-      category: category,
-      content: content,
-      state: state,
-      date: date,
+      userId,
+      title,
+      subtitle,
+      category,
+      content,
+      imageUrl,
+      state,
+      date,
     });
 
     // Save the blog to MongoDB
     const savedBlog = await newBlog.save();
+
     // Save the blog to Firestore
-    await setDoc(doc(db, "blogs", savedBlog._id.toString() ), {
-      userId: userId,
-      views: 0
+    await setDoc(doc(db, "blogs", savedBlog._id.toString()), {
+      userId,
+      views: 0,
+      imageUrl,
     });
+
     // Respond with success and the saved blog data
     res.status(201).json(savedBlog);
   } catch (error) {
     // Handle errors gracefully
-    console.error(error);
-    res.status(500).json({ error: error.message });
+    console.error('Error in addBlog:', error);
+    res.status(500).json({ error: 'An error occurred while adding the blog' });
   }
 };
-
 
 const getBlog = async (req, res, next) => {
     const userId = req.userId;
 
     try {
-      const articles = await Blog.find({ userId }, 'title subtitle');
+      const articles = await Blog.find({ userId });
       res.status(200).json(articles);
     } catch (error) {
       res.status(500).json({ error: error.message });

@@ -83,7 +83,7 @@ const sendOtpEmail = async (email, otp) => {
 
   // Create a transporter using the test account
   let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: "smtp.ethereal.email",
     port: 587,
     secure: false, 
     auth: {

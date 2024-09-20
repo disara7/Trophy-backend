@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 import bcrypt from 'bcryptjs';
 
+
 const employeeSchema = new Schema({
   employeeId: {
     type: String,
@@ -35,7 +36,7 @@ employeeSchema.pre('save', function(next) {
 });
 
 employeeSchema.methods.compareOTP = async function(otp) {
-  const isOtpValid = await (otp === this.otp);
+  const isOtpValid = await bcrypt.compare(otp, this.otp);
   return isOtpValid && this.otpExpiry > new Date();
 };
 

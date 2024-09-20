@@ -23,11 +23,18 @@ const blogSchema = new Schema({
   content: {
     type: String,
   },
+  imageUrl: {
+    type: String,
+  },
   state: {
     type: String,
   },
   date: {
     type: Date,
+  },
+  views: {
+    type: Number,
+    default: 0
   }
 });
 

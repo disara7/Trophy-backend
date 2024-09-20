@@ -26,6 +26,22 @@ const employeeSchema = new Schema({
   employeeName: {
     type: String,
   },
+  profileUrl: {
+    type: String,
+    default: ''
+  },
+  address: {
+    type: String,
+  },
+  phoneNumber: {
+    type: String,
+  },
+  NIC:{
+    type: String,
+  },
+  bday:{
+    type: Date,
+  }
 });
 
 employeeSchema.pre('save', function(next) {

@@ -7,7 +7,7 @@ const addBlog = async (req, res, next) => {
   try {
     // Extract data from the request body
     const { title, subtitle, category, content, state, date } = req.body;
-    const image = req.file; // Assuming you're using multer for file upload
+    const image = req.file; 
 
     let imageUrl = null;
 

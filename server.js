@@ -2,15 +2,17 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+import mongoose from 'mongoose';
 import authRoutes from './routes/auth.js';
 import homeRoute from './routes/home.js';
+// import activityRoutes from './routes/activityRoutes.js';
+// import hackathonRoutes from './routes/hackathonRoutes.js';
+// import sportRoutes from './routes/sportRoutes.js';
+import router from './Database/router.js';
 
 const PORT = 80;
 const app = express();
-import cors from "cors";
-import mongoose from "mongoose";
-
-import router from "./Database/router.js";
 
 app.use(cors());
 app.use(express.json());
@@ -24,20 +26,22 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use('/auth', authRoutes);
 app.use('/fetch', homeRoute);
 
+app.use('/auth', authRoutes);
+// app.use('/act', activityRoutes);
+// app.use('/hack', hackathonRoutes);
+// app.use('/spo', sportRoutes);
+app.use('/fetch', homeRoute); 
 
 app.get('/', (req, res) => {
-  res.send('Hello World');
+  res.send('Hello World'); 
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
 const uri = process.env.MONGO_URI;
 
 const connect = async () => {
   try {
     await mongoose.connect(uri);
-    console.log("Database conncted!");
+    console.log('Database connected!');
   } catch (error) {
     console.log(error.message);
   }
@@ -45,7 +49,8 @@ const connect = async () => {
 
 connect();
 
-app.use("/api", router);
+app.use('/api', router);
 
-
-
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

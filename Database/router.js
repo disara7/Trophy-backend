@@ -6,11 +6,21 @@ import adminController from './controller/admin_controller.js';
 import multer from 'multer';
 const router = express.Router();
 
+import activityController from './controller/activity_controller.js';
+import hackathonController from './controller/hackathon_controller.js';
+import sportController from './controller/sport_controller.js';
+
 import { verifyToken } from "../authHelpers.js";
 const upload = multer({
     storage: multer.memoryStorage(),
     limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
   })
+
+
+router.get("/Activities", activityController.getActivities);
+router.get("/Hackathons", hackathonController.getHackathons);
+router.get("/Sports", sportController.getSports);
+
 
 router.get("/empolyee", employeeController.getEmployee);
 router.post("/addempolyee", employeeController.addEmployee);
@@ -29,3 +39,4 @@ router.post("/getAdmin", adminController.verifyAdmin);
 router.post('/verifyToken', adminController.verifyToken);
 
 export default router;
+

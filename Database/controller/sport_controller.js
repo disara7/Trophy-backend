@@ -1,4 +1,4 @@
-const Sport = require("../models/sport");
+import Sport from '../models/sport.js';
 
 const getSports = async (req, res) => {
   try {
@@ -9,6 +9,4 @@ const getSports = async (req, res) => {
   }
 };
 
-module.exports = {
-  getSports,
-};
+export default { getSports };

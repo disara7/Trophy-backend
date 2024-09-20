@@ -1,14 +1,12 @@
-const Hackathon = require("../models/hackathon");
+import Hackathon from '../models/hackathon.js';
 
 const getHackathons = async (req, res) => {
   try {
-    const Hackathons = await Hackathon.find();
-    res.status(200).json(Hackathons);
+    const hackathons = await Hackathon.find();
+    res.status(200).json(hackathons);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-module.exports = {
-  getHackathons,
-};
+export default { getHackathons };

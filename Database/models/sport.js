@@ -1,6 +1,6 @@
-// Database/models/activity.js
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
+
+const { Schema } = mongoose;
 
 const sportSchema = new Schema({
   sporttitle: {
@@ -35,4 +35,4 @@ const sportSchema = new Schema({
 
 const Sport = mongoose.model("Sport", sportSchema);
 
-module.exports = Sport;
+export default Sport;

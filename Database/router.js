@@ -5,11 +5,9 @@ import blogController from './controller/blog_controller.js';
 import adminController from './controller/admin_controller.js';
 const router = express.Router();
 
-const controller = require("./controller/employee_controller");
-const activityController = require("./controller/activity_controller");
-const hackathonController = require("./controller/hackathon_controller");
-const sportController = require("./controller/sport_controller");
-
+import activityController from './controller/activity_controller.js';
+import hackathonController from './controller/hackathon_controller.js';
+import sportController from './controller/sport_controller.js';
 
 import { verifyToken } from "../authHelpers.js";
 
@@ -18,7 +16,6 @@ router.get("/Activities", activityController.getActivities);
 router.get("/Hackathons", hackathonController.getHackathons);
 router.get("/Sports", sportController.getSports);
 
-module.exports = router;
 
 router.get("/empolyee", employeeController.getEmployee);
 router.post("/addempolyee", employeeController.addEmployee);

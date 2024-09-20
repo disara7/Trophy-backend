@@ -141,9 +141,39 @@ const popularPosts = async (req, res, next) => {
   }
 }
 
+const deleteBlog = async (req, res) => {
+  const { articleId } = req.params;
+  try {
+    const result = await Blog.findByIdAndDelete(articleId);
+    if (result) {
+      return res.status(200).json({ message: 'Blog deleted successfully' });
+    } else {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Error deleting blog', error });
+  }
+};
+
+const acceptBlog = async (req, res) => {
+  const { articleId } = req.params;
+  try {
+    const result = await Blog.findByIdAndUpdate(
+      articleId, 
+      { state: 'accepted' }, 
+      { new: true }
+    );
+    if (result) {
+      return res.status(200).json({ message: 'Blog accepted successfully', blog: result });
+    } else {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Error accepting blog', error });
+  }
+};
 
 
 
 
-
-export default {addBlog, getBlog, fetchBlogs, fetchAcceptedBlogs, popularPosts};
+export default {addBlog, getBlog, fetchBlogs, fetchAcceptedBlogs, popularPosts, deleteBlog, acceptBlog};

@@ -22,6 +22,8 @@ router.get("/getblog",verifyToken, blogController.getBlog);
 router.get("/fetchBlogs", blogController.fetchBlogs);
 router.get("/fetchAcceptedBlogs", blogController.fetchAcceptedBlogs);
 router.get("/popularPosts", blogController.popularPosts);
+router.delete("/deleteBlog/:articleId", blogController.deleteBlog);
+router.post("/acceptBlog/:articleId", blogController.acceptBlog);
 router.post("/addAdmin", adminController.addAdmin);
 router.post("/getAdmin", adminController.verifyAdmin);
 router.post('/verifyToken', adminController.verifyToken);

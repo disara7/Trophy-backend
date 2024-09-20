@@ -1,20 +1,42 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
+import Employee from "./employee.js";
 
 const blogSchema = new Schema({
+  userId: {
+    type: String,
+    ref: Employee
+  },
   articleId: {
     type: String,
-  },
-  image: {
-    type: Buffer,
+    unique: true,
   },
   title: {
     type: String,
   },
-  text: {
+  subtitle: {
     type: String,
   },
+  category: {
+    type: String,
+  },
+  content: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
+  date: {
+    type: Date,
+  }
+});
+
+blogSchema.pre('save', function(next) {
+  if (!this.articleId) {
+    this.articleId = this._id.toString();
+  }
+  next();
 });
 
 const Blog = mongoose.model("Blog", blogSchema);
-module.exports = Blog;
+export default Blog;

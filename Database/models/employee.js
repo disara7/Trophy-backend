@@ -1,12 +1,11 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-const bcrypt = require('bcryptjs');
+import bcrypt from 'bcryptjs';
 
 const employeeSchema = new Schema({
   employeeId: {
     type: String,
     unique: true,
-    required: true,
   },
   userName: {
     type: String,
@@ -28,6 +27,13 @@ const employeeSchema = new Schema({
   },
 });
 
+employeeSchema.pre('save', function(next) {
+  if (!this.employeeId) {
+    this.employeeId = this._id.toString();
+  }
+  next();
+});
+
 employeeSchema.methods.compareOTP = async function(otp) {
   const isOtpValid = await (otp === this.otp);
   return isOtpValid && this.otpExpiry > new Date();
@@ -38,4 +44,4 @@ employeeSchema.methods.comparePassword = function(password) {
 };
 
 const Employee = mongoose.model("Employee", employeeSchema);
-module.exports = Employee;
+export default Employee;

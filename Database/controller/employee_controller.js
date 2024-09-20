@@ -1,4 +1,4 @@
-const Employee = require("../models/employee");
+import Employee from "../models/employee.js";
 
 const getEmployee = (req, res, next) => {
   Employee.find()
@@ -30,5 +30,4 @@ const addEmployee = (req, res, next) => {
     });
 };
 
-exports.getEmployee = getEmployee;
-exports.addEmployee = addEmployee;
+export default { getEmployee, addEmployee };

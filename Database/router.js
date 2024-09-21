@@ -22,7 +22,11 @@ router.get("/Activities", activityController.getActivities);
 router.post("addActivities", upload.any(), activityController.addActivities);
 router.delete('/deleteActivity/:id', activityController.deleteActivity);
 router.get("/activity/:id/users", activityController.getRegisteredUsers);
+
 router.get("/Hackathons", hackathonController.getHackathons);
+router.post('/addHackathon', upload.any(), hackathonController.addHackathon);
+router.delete('/deleteHackathon/:id', hackathonController.deleteHackathon);
+
 router.get("/Sports", sportController.getSports);
 
 

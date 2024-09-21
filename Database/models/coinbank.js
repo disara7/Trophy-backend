@@ -14,7 +14,7 @@ const CoinBankSchema = new Schema({
   },
   noOfCoinsEarned: {
     type: Number,
-    default: 0
+    default: 100
   },
   noOfCoinsGifted: {
     type: Number,

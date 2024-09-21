@@ -19,10 +19,12 @@ const upload = multer({
 
 
 router.get("/Activities", activityController.getActivities);
+router.get("/getActivities", verifyToken, activityController.getActivitiesForUser);
 router.post("/addActivity", upload.any(), activityController.addActivities);
 router.delete('/deleteActivity/:id', activityController.deleteActivity);
 router.get("/activity/:id/users", activityController.getRegisteredUsers);
 router.get("/getQRCode/:id", activityController.getQRCode);
+router.post("/compareUniqueKey/:id", verifyToken, activityController.compareUniqueKey);
 
 router.get("/Hackathons", hackathonController.getHackathons);
 router.post('/addHackathon', upload.any(), hackathonController.addHackathon);
@@ -43,6 +45,7 @@ router.post("/updateMyData", verifyToken, employeeController.updateMyData);
 router.post("/addempolyee", employeeController.addEmployee);
 router.post("/resetPassword", employeeController.restPassword);
 router.post("/deleteempolyee", employeeController.deleteUser);
+
 router.post("/addchallenge", challengeController.addChallenge);
 router.post("/addblog",verifyToken,upload.single('image'), blogController.addBlog);
 router.get("/getblog",verifyToken, blogController.getBlog);
@@ -51,10 +54,13 @@ router.get("/fetchAcceptedBlogs", blogController.fetchAcceptedBlogs);
 router.get("/popularPosts", blogController.popularPosts);
 router.delete("/deleteBlog/:articleId", blogController.deleteBlog);
 router.post("/acceptBlog/:articleId", blogController.acceptBlog);
+
 router.post("/addAdmin", adminController.addAdmin);
 router.post("/getAdmin", adminController.verifyAdmin);
 router.post('/verifyToken', adminController.verifyToken);
+
 router.get('/coin', verifyToken, coinController.getCoinCount);
+router.post('/addCoins', verifyToken, coinController.addCoin);
 
 export default router;
 

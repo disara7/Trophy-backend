@@ -12,6 +12,22 @@ const getActivities = async (req, res) => {
   }
 };
 
+const getActivitiesForUser = async (req, res) => {
+  const userId = req.userId; 
+
+  try {
+    // Fetch activities where the userId is NOT in registeredEmployees
+    const activities = await Activity.find({
+      registeredEmployees: { $ne: userId }
+    });
+
+    res.status(200).json(activities);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 const addActivities = async (req, res) => {
   try {
     const {
@@ -132,5 +148,38 @@ const getQRCode = async (req, res) => {
   }
 };
 
+const compareUniqueKey = async (req, res) => {
+  const activityId = req.params.id; 
+  const userId = req.userId;
 
-export default { getActivities, addActivities, deleteActivity, getRegisteredUsers, getQRCode };
+  try {
+    const { uniqueKey } = req.body; 
+
+    // Find the activity using the activityId
+    const activity = await Activity.findOne({ _id: activityId });
+    
+    if (!activity) {
+      return res.status(404).json({ message: 'Activity not found' });
+    }
+
+    // Compare the unique key with the one in the request body
+    if (activity.uniqueKey === uniqueKey) {
+      if (activity.registeredEmployees.includes(userId)) {
+        return res.status(400).json({ message: 'User already collected this activity' });
+      }
+      // Add the userId to the registeredEmployees array
+      activity.registeredEmployees.push(userId);
+      await activity.save();
+      return res.status(200).json({ message: 'Unique key matched' });
+    } else {
+      return res.status(400).json({ message: 'Unique key does not match' });
+    }
+  } catch (error) {
+    console.error("Error comparing unique key:", error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+
+export default { getActivities, addActivities, deleteActivity, getRegisteredUsers, getQRCode, compareUniqueKey, getActivitiesForUser };

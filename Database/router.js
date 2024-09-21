@@ -14,11 +14,14 @@ import sportController from './controller/sport_controller.js';
 import { verifyToken } from "../authHelpers.js";
 const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
+    limits: { fileSize: 5 * 1024 * 1024 }, 
   })
 
 
 router.get("/Activities", activityController.getActivities);
+router.post("addActivities", upload.any(), activityController.addActivities);
+router.delete('/deleteActivity/:id', activityController.deleteActivity);
+router.get("/activity/:id/users", activityController.getRegisteredUsers);
 router.get("/Hackathons", hackathonController.getHackathons);
 router.get("/Sports", sportController.getSports);
 

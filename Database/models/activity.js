@@ -1,6 +1,7 @@
 // Database/models/activity.js
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
+import Employee from "./employee.js";
 
 const activitySchema = new Schema({
   title: {
@@ -39,6 +40,11 @@ const activitySchema = new Schema({
     type: String,
     required: true,
   },
+  registeredEmployees: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Employee, 
+    default: [],
+  }],
 });
 
 const Activity = mongoose.model("Activity", activitySchema);

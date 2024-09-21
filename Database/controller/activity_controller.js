@@ -1,6 +1,7 @@
 import Activity from '../models/activity.js';
 import { ref, storage, uploadBytes, getDownloadURL } from '../../Firebase/firebase-config.js';
 import { v4 as uuidv4 } from 'uuid';
+import QRCode from 'qrcode'
 
 const getActivities = async (req, res) => {
   try {
@@ -22,14 +23,17 @@ const addActivities = async (req, res) => {
       activitytime,
       activityvenue,
     } = req.body;
-
-    const mainImage = req.files?.activitiesmainimg?.[0]; 
-    const cardImage = req.files?.cardimg?.[0];
-
+    
+    const files = req.files;
+    const mainImage = files.find(file => file.fieldname === 'activitiesmainimgUrl');
+    const cardImage = files.find(file => file.fieldname === 'imageUrl');
+    
+    
     let activitiesMainImgUrl = null;
     let cardImgUrl = null;
+    let qrCodeUrl = null;
+    const uniqueKey = uuidv4(); 
 
-    // Upload main image to Firebase Storage
     if (mainImage) {
       const mainImageBuffer = mainImage.buffer;
       const mainImageExtension = mainImage.mimetype.split("/")[1];
@@ -39,7 +43,6 @@ const addActivities = async (req, res) => {
       activitiesMainImgUrl = await getDownloadURL(mainImageSnapshot.ref);
     }
 
-    // Upload card image to Firebase Storage
     if (cardImage) {
       const cardImageBuffer = cardImage.buffer;
       const cardImageExtension = cardImage.mimetype.split("/")[1];
@@ -49,7 +52,13 @@ const addActivities = async (req, res) => {
       cardImgUrl = await getDownloadURL(cardImageSnapshot.ref);
     }
 
-    // Create a new activity document using the mongoose model
+    const qrCodeBuffer = await QRCode.toBuffer(uniqueKey);
+
+    const qrCodeName = `activities/qrcodes/${uniqueKey}.png`;
+    const qrCodeRef = ref(storage, qrCodeName);
+    const qrCodeSnapshot = await uploadBytes(qrCodeRef, qrCodeBuffer);
+    qrCodeUrl = await getDownloadURL(qrCodeSnapshot.ref);
+
     const newActivity = new Activity({
       title,
       description,
@@ -60,11 +69,11 @@ const addActivities = async (req, res) => {
       activityvenue,
       activitiesmainimgUrl: activitiesMainImgUrl,
       imageUrl: cardImgUrl,
+      uniqueKey, 
+      qrCodeUrl, 
     });
 
-    // Save the activity in MongoDB
     await newActivity.save();
-
 
     res.status(200).json({ message: "Activity added successfully", newActivity });
   } catch (error) {
@@ -99,5 +108,29 @@ const getRegisteredUsers = async (req, res) => {
   }
 };
 
+const getQRCode = async (req, res) => {
+  try {
+    const activityId = req.params.id;
 
-export default { getActivities, addActivities, deleteActivity, getRegisteredUsers };
+    const activity = await Activity.findById(activityId);
+
+    if (!activity) {
+      return res.status(404).json({ message: 'Activity not found' });
+    }
+
+    
+    const qrCodeUrl = activity.qrCodeUrl;
+
+    if (!qrCodeUrl) {
+      return res.status(404).json({ message: 'QR Code not found for this activity' });
+    }
+
+    res.status(200).json({ qrCodeUrl, message: 'QR Code retrieved successfully' });
+  } catch (error) {
+    console.error("Error fetching QR code:", error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+export default { getActivities, addActivities, deleteActivity, getRegisteredUsers, getQRCode };

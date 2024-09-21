@@ -17,7 +17,7 @@ const HomeState = async (req, res) => {
         const response = {
             coins: coinBank ? coinBank.noOfCoinsEarned : 0,
             progressPoint: progress ? progress.progressPoint : 0,
-            targetPoint: progress ? progress.targetPoint : 100,
+            targetPoint: progress ? progress.targetPoint : 1000,
             level: progress ? progress.level : 0,
         };
 

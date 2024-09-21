@@ -45,6 +45,14 @@ const activitySchema = new Schema({
     ref: Employee, 
     default: [],
   }],
+  qrCodeUrl: {
+    type: String,
+    default: "",
+  },
+  uniqueKey: {
+    type: String,
+    default: "",
+  },
 });
 
 const Activity = mongoose.model("Activity", activitySchema);

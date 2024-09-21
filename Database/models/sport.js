@@ -1,6 +1,27 @@
 import mongoose from "mongoose";
+import Employee from "./employee.js";
 
 const { Schema } = mongoose;
+
+const registeredUserSchema = new Schema({
+  employeeId: {
+    type: Schema.Types.ObjectId, 
+    ref: Employee,
+    required: true,
+  },
+  employeeName: {
+    type: String,
+    required: true,
+  },
+  userName: {
+    type: String,
+    required: true,
+  },
+  isApproved: {
+    type: Boolean,
+    default: false, 
+  },
+});
 
 const sportSchema = new Schema({
   sporttitle: {
@@ -31,6 +52,7 @@ const sportSchema = new Schema({
     type: String,
     required: true,
   },
+  registeredUsers: [registeredUserSchema], 
 });
 
 const Sport = mongoose.model("Sport", sportSchema);

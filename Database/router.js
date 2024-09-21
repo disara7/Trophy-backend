@@ -28,6 +28,10 @@ router.post('/addHackathon', upload.any(), hackathonController.addHackathon);
 router.delete('/deleteHackathon/:id', hackathonController.deleteHackathon);
 
 router.get("/Sports", sportController.getSports);
+router.post('/addSport', upload.single('sportmainimg'), sportController.addSport);
+router.delete('/deleteSport/:id', sportController.deleteSport);
+router.get("/unapprovedUsers/:sportId", sportController.unApprovedUsers);
+router.post("/approveUser/:userId", sportController.approveUser);
 
 
 router.get("/empolyee", employeeController.getEmployee);
